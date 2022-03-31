@@ -30,11 +30,16 @@ class Field:
                 # self.a[i].append(choice([0, 1]))
                 self.a[i].append(0)
        
+        for i in range(39):
+            for j in range(30):
+                self.a[i][j]=1
         self.a[1+10][1+10] = 1
         self.a[1+10][3+10] = 1
         self.a[2+10][3+10] = 1
         self.a[2+10][2+10] = 1
         self.a[3+10][2+10] = 1
+        self.a[14][13] = 1
+        self.a[15][14] = 1
         self.draw()
    
     def step(self):
@@ -119,7 +124,7 @@ root.geometry("800x800")
 c = Canvas(root, width=800, height=800)
 c.pack()
  
-f = Field(c, 40, 40, 800, 800)
+f = Field(c, 40, 40, 400, 400)
 f.print_field()
  
 '''
