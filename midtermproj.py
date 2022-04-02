@@ -1,8 +1,12 @@
+from lib2to3.refactor import get_all_fix_names
+from re import L, T
 from tkinter import *
+from tkinter import ttk
+import tkinter.messagebox    
 from time import sleep
 from random import randint, choice
 from turtle import heading
- 
+
 class Field:
     def __init__(self, c, n, m, width, height, walls=False):
         '''
@@ -30,9 +34,9 @@ class Field:
                 # self.a[i].append(choice([0, 1]))
                 self.a[i].append(0)
        
-        for i in range(39):
-            for j in range(30):
-                self.a[i][j]=1
+        # for i in range(39):
+        #     for j in range(30):
+        #         self.a[i][j]=1
         self.a[1+10][1+10] = 1
         self.a[1+10][3+10] = 1
         self.a[2+10][3+10] = 1
@@ -41,6 +45,12 @@ class Field:
         self.a[14][13] = 1
         self.a[15][14] = 1
         self.draw()
+        
+
+    def get_mouse_pos(self,event):
+        #here I should get the mouse pos and add [1] to matrix where the mouse is
+        self.a[event.x//20+1][event.y//20+1] = 1
+        # print(event.x//20,event.y//20+1)
    
     def step(self):
         b = []
@@ -51,7 +61,7 @@ class Field:
        
         for i in range(1, self.n - 1):
             for j in range(1, self.m - 1):
-                neib_sum = self.a[i - 1][j - 1] + self.a[i - 1][j] + self.a[i - 1][j + 1] + self.a[i][j - 1] + self.a[i - 1][j + 1] + self.a[i + 1][j - 1] + self.a[i + 1][j] + self.a[i + 1][j + 1]
+                neib_sum = self.a[i - 1][j - 1] + self.a[i - 1][j] + self.a[i - 1][j + 1] + self.a[i][j - 1] + self.a[i][j + 1] + self.a[i + 1][j - 1] + self.a[i + 1][j] + self.a[i + 1][j + 1]
                 if neib_sum < 2 or neib_sum > 3:
                     b[i][j] = 0
                 elif neib_sum == 3:
@@ -82,50 +92,36 @@ class Field:
                 else:
                     color = "white"
                 self.c.create_rectangle((i-1) * sizen, (j-1) * sizem, (i) * sizen, (j) * sizem, fill=color)
-        self.step()
-        self.c.after(100, self.draw)
- 
-class Player:
-    def __init__(self, c, x, y, size, color="RED"):
-        self.x = x
-        self.y = y
-        self.size = size
-        self.color = color
-        self.c = c
-        self.body = self.c.create_oval(self.x - self.size / 2,
-        self.y - self.size / 2,
-        self.x + self.size / 2,
-        self.y + self.size / 2,
-        fill=self.color)
- 
-    def moveto(self, x, y):
-        self.mx = x
-        self.my = y
-        self.dx = (self.mx - self.x) / 50
-        self.dy = (self.my - self.y) / 50
-        self.draw()
- 
-    def draw(self):
- 
-        self.x += self.dx
-        self.y += self.dy
-        self.c.move(self.body, self.dx, self.dy)
- 
-        print(abs(self.x))
-        if abs(self.mx - self.x) > 2:
-            self.c.after(100, self.draw)
- 
- 
-    def distance(self, x, y):
-        return ((self.x - x)**2 + (self.y - y)**2) ** 0.5
- 
+        try:
+            if self.running==True:
+                self.step()
+        except:
+            pass
+        self.c.after(1, self.draw)
+
+    def start(self,event):
+        """Enable scanning by setting the global flag to True."""
+        self.running = True
+        print(1)
+
+    def stop(self,event):
+        """Stop scanning by setting the global flag to False."""
+        self.running = False
+        print(0)
+
 root = Tk()
 root.geometry("800x800")
 c = Canvas(root, width=800, height=800)
+# Button(c, text ="Start",activebackground="black" , activeforeground="white",bg="green",bd=10).pack()
+# ttk.Button(c, text="Stop").pack()
+
 c.pack()
  
-f = Field(c, 40, 40, 400, 400)
-f.print_field()
+
+f = Field(c, 40, 40, 800, 800)
+    
+# f.print_field()
+
  
 '''
 p1 = Player(c, 25, 25, 20, "GREEN")
@@ -134,6 +130,11 @@ p2 = Player(c, 375, 25, 20, "RED")
 p1.moveto(150, 200)
 p2.moveto(200, 300)
 '''
+
  
+root.bind('<Button-1>',f.get_mouse_pos) #leftmouse
+root.bind('<space>',f.start)
+root.bind('p',f.stop)
+
+
 root.mainloop()
-# c.create_oval(p.x + 5,p.y + 5,p.x+p.size + 5,p.y+p.size + 5)
