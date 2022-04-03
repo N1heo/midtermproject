@@ -1,5 +1,3 @@
-from lib2to3.refactor import get_all_fix_names
-from re import L, T
 from tkinter import *
 from tkinter import ttk
 import tkinter.messagebox    
@@ -31,66 +29,148 @@ class Field:
         for i in range(self.n):
             self.a.append([])
             for j in range(self.m):
-                # self.a[i].append(choice([0, 1]))
-                self.a[i].append(0)
-       
-        # for i in range(39):
-        #     for j in range(30):
-        #         self.a[i][j]=1
-        self.a[1+10][1+10] = 1
-        self.a[1+10][3+10] = 1
-        self.a[2+10][3+10] = 1
-        self.a[2+10][2+10] = 1
-        self.a[3+10][2+10] = 1
-        self.a[14][13] = 1
-        self.a[15][14] = 1
+                self.a[i].append(choice([0, 1, 2, 3,0,0]))
+                
+        # Random preset
+        # x,y = randint(1,39),randint(1,39)
+        # for l in range(1,3):
+        #     self.a[x][y] = 1
+        #     self.a[x-l][y-l] = 1
+        #     self.a[x-l][y] = 1
+        #     self.a[x-l][y+l] = 1
+        #     self.a[x][y-l] = 1
+        #     self.a[x][y+l] = 1
+        #     self.a[x+l][y-l] = 1
+        #     self.a[x+l][y] = 1
+        #     self.a[x+l][y+l] = 1
         self.draw()
         
+### All the methods, that take input from user:
 
-    def get_mouse_pos(self,event):
-        #here I should get the mouse pos and add [1] to matrix where the mouse is
-        self.a[event.x//20+1][event.y//20+1] = 1
-        # print(event.x//20,event.y//20+1)
-   
+    def left_click(self,event):
+        for l in range (1,3):
+            self.a[event.x//20+1][event.y//20+1] = 1
+            self.a[event.x//20+1-l][event.y//20+1-l] = 1
+            self.a[event.x//20+1-l][event.y//20+1] = 1
+            self.a[event.x//20+1-l][event.y//20+1+l] = 1
+            self.a[event.x//20+1][event.y//20+1-l] = 1
+            self.a[event.x//20+1][event.y//20+1+l] = 1
+            self.a[event.x//20+1+l][event.y//20+1-l] = 1
+            self.a[event.x//20+1+l][event.y//20+1] = 1
+            self.a[event.x//20+1+l][event.y//20+1+l] = 1
+    def right_click(self,event):
+        for l in range (1,3):
+            self.a[event.x//20+1][event.y//20+1] = 2
+            self.a[event.x//20+1-l][event.y//20+1-l] = 2
+            self.a[event.x//20+1-l][event.y//20+1] = 2
+            self.a[event.x//20+1-l][event.y//20+1+l] = 2
+            self.a[event.x//20+1][event.y//20+1-l] = 2
+            self.a[event.x//20+1][event.y//20+1+l] = 2
+            self.a[event.x//20+1+l][event.y//20+1-l] = 2
+            self.a[event.x//20+1+l][event.y//20+1] = 2
+            self.a[event.x//20+1+l][event.y//20+1+l] = 2
+
+    def middle_click(self,event):
+        for l in range (1,3):
+            self.a[event.x//20+1][event.y//20+1] = 3
+            self.a[event.x//20+1-l][event.y//20+1-l] = 3
+            self.a[event.x//20+1-l][event.y//20+1] = 3
+            self.a[event.x//20+1-l][event.y//20+1+l] = 3
+            self.a[event.x//20+1][event.y//20+1-l] = 3
+            self.a[event.x//20+1][event.y//20+1+l] = 3
+            self.a[event.x//20+1+l][event.y//20+1-l] = 3
+            self.a[event.x//20+1+l][event.y//20+1] = 3
+            self.a[event.x//20+1+l][event.y//20+1+l] = 3
+    
+    def delete_click(self,event):
+        for l in range (1,3):
+            self.a[event.x//20+1][event.y//20+1] = 0
+            self.a[event.x//20+1-l][event.y//20+1-l] = 0
+            self.a[event.x//20+1-l][event.y//20+1] = 0
+            self.a[event.x//20+1-l][event.y//20+1+l] = 0
+            self.a[event.x//20+1][event.y//20+1-l] = 0
+            self.a[event.x//20+1][event.y//20+1+l] = 0
+            self.a[event.x//20+1+l][event.y//20+1-l] = 0
+            self.a[event.x//20+1+l][event.y//20+1] = 0
+            self.a[event.x//20+1+l][event.y//20+1+l] = 0
+    
+    def helper(self,event):
+        tkinter.messagebox.showinfo(title='Helper', message='''
+        Press space to launch simulation
+        Press P to pause it
+        Left click - add white cells
+        Right click - add viruses
+        Middle click - add bacterias
+        D on keyboard - delete''')
+
+### 
+
     def step(self):
-        b = []
+        #The whole magic happens here
+        b = []        
         for i in range(self.n):
             b.append([])
             for j in range(self.m):
                 b[i].append(0)
-       
-        for i in range(1, self.n - 1):
-            for j in range(1, self.m - 1):
-                neib_sum = self.a[i - 1][j - 1] + self.a[i - 1][j] + self.a[i - 1][j + 1] + self.a[i][j - 1] + self.a[i][j + 1] + self.a[i + 1][j - 1] + self.a[i + 1][j] + self.a[i + 1][j + 1]
-                if neib_sum < 2 or neib_sum > 3:
-                    b[i][j] = 0
-                elif neib_sum == 3:
-                    b[i][j] = 1
+        
+        for i in range(3, self.n - 3):
+            for j in range(3, self.m - 3):
+                neib_sum1 = str(self.a[i - 1][j - 1]) + str(self.a[i - 1][j]) + str(self.a[i - 1][j + 1]) + str(self.a[i][j - 1]) + str(self.a[i][j + 1]) + str(self.a[i + 1][j - 1]) + str(self.a[i + 1][j]) + str(self.a[i + 1][j + 1])
+                neib_sum2 = str(self.a[i - 2][j - 2]) + str(self.a[i - 2][j]) + str(self.a[i - 2][j + 2]) + str(self.a[i][j - 2]) + str(self.a[i][j + 2]) + str(self.a[i + 2][j - 2]) + str(self.a[i + 2][j]) + str(self.a[i + 2][j + 2])
+                # neib_sum3 = str(self.a[i - 3][j - 3]) + str(self.a[i - 3][j]) + str(self.a[i - 3][j + 3]) + str(self.a[i][j - 3]) + str(self.a[i][j + 3]) + str(self.a[i + 3][j - 3]) + str(self.a[i + 3][j]) + str(self.a[i + 3][j + 3])
+                neib_sum = neib_sum1 + neib_sum2 #+ neib_sum3
+                neib_strsum = self.a[i - 1][j - 1] + self.a[i - 1][j] + self.a[i - 1][j + 1] + self.a[i][j - 1] + self.a[i][j + 1] + self.a[i + 1][j - 1] + self.a[i + 1][j] + self.a[i + 1][j + 1]
+
+                if neib_strsum == 8:
+                    b[i][j] = choice([1,2,3])
+
+                elif neib_sum.count('1') - neib_sum.count('2') >=0 and neib_sum.count('1') - neib_sum.count('3') >=-1:
+                    if choice([1,2,3,4])==1:
+                        b[i][j]=1
+                   
+              
+                elif neib_sum.count('2') - neib_sum.count('1') >=1 and neib_sum.count('2') - neib_sum.count('3') >=0:
+                    if choice([1,2,3])==2:
+                        b[i][j] = 2 
+                   
+                elif neib_sum.count('3') - neib_sum.count('1')>=2 and neib_sum.count('3') - neib_sum.count('2')>=1:
+                    if choice([1,2,3])==3:
+                        b[i][j] = 3
+                
                 else:
-                    b[i][j] = self.a[i][j]
-       
-        self.a = b
- 
- 
-    def print_field(self):
+                    
+                    b[i][j]=self.a[i][j]
+                   
         for i in range(self.n):
             for j in range(self.m):
-                print(self.a[i][j], end="")
-            print()
+                print(b[i][j], end="")
+            print()    
+        self.a = b
+ 
+    #function for printing the matrix (not used)
+    # def print_field(self):
+    #     for i in range(self.n):
+    #         for j in range(self.m):
+    #             print(self.a[i][j], end="")
+    #         print()
  
     def draw(self):
         '''
-       draw each element of matrix as a rectangle with white background and wall rectangle should have dark grey background
+       draw each element of matrix as a rectangle 
        '''
         color = "grey"
         sizen = self.width // (self.n - 2)
         sizem = self.height // (self.m - 2)
-        for i in range(1, self.n - 1):
-            for j in range(1, self.m - 1):
+        for i in range(3, self.n - 3):
+            for j in range(3, self.m - 3):
                 if (self.a[i][j] == 1):
-                    color = "green"
+                    color = "#d0d0d0" #white cells
+                elif (self.a[i][j] == 2):
+                    color = '#09146d' #viruses
+                elif (self.a[i][j] == 3):
+                    color = '#288624' #bacterias
                 else:
-                    color = "white"
+                    color = "#9a0000"
                 self.c.create_rectangle((i-1) * sizen, (j-1) * sizem, (i) * sizen, (j) * sizem, fill=color)
         try:
             if self.running==True:
@@ -100,41 +180,33 @@ class Field:
         self.c.after(1, self.draw)
 
     def start(self,event):
-        """Enable scanning by setting the global flag to True."""
+        """Start the game."""
         self.running = True
-        print(1)
+        print('running')
 
     def stop(self,event):
-        """Stop scanning by setting the global flag to False."""
+        """Stop the game."""
         self.running = False
-        print(0)
+        print('''
+        not running
+        ''')
 
 root = Tk()
-root.geometry("800x800")
-c = Canvas(root, width=800, height=800)
-# Button(c, text ="Start",activebackground="black" , activeforeground="white",bg="green",bd=10).pack()
-# ttk.Button(c, text="Stop").pack()
+root.geometry("600x600")
+c = Canvas(root, width=600, height=600)
 
 c.pack()
+c.create_text(300, 10, text="Cellural simulation, press H for help", fill="black", font=('Helvetica 15 bold'))
  
-
-f = Field(c, 40, 40, 800, 800)
+f = Field(c, 30, 30, 600, 600)
     
-# f.print_field()
-
- 
-'''
-p1 = Player(c, 25, 25, 20, "GREEN")
-p2 = Player(c, 375, 25, 20, "RED")
- 
-p1.moveto(150, 200)
-p2.moveto(200, 300)
-'''
-
- 
-root.bind('<Button-1>',f.get_mouse_pos) #leftmouse
-root.bind('<space>',f.start)
-root.bind('p',f.stop)
+root.bind('<Button-1>',f.left_click) #leftmouse
+root.bind('<Button-2>',f.middle_click) #scroll click
+root.bind('<Button-3>',f.right_click) #rightmouse
+root.bind('d',f.delete_click)#d
+root.bind('h',f.helper)#h
+root.bind('<space>',f.start)#space
+root.bind('p',f.stop)#p
 
 
 root.mainloop()
