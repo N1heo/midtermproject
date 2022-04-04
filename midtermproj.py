@@ -106,72 +106,76 @@ class Field:
 
     def __step(self):
         # The whole magic happens here
-        b = []
+        __b = []
         for i in range(self.n):
-            b.append([])
+            __b.append([])
             for j in range(self.m):
-                b[i].append(0)
+                __b[i].append(0)
 
         for i in range(3, self.n - 3):
             for j in range(3, self.m - 3):
-                neib_sum1 = (str(self.a[i - 1][j - 1]) + str(self.a[i - 1][j])
-                             + str(self.a[i - 1][j + 1])
-                             + str(self.a[i][j - 1])
-                             + str(self.a[i][j + 1])
-                             + str(self.a[i + 1][j - 1])
-                             + str(self.a[i + 1][j])
-                             + str(self.a[i + 1][j + 1]))
-                neib_sum2 = (str(self.a[i - 2][j - 2]) + str(self.a[i - 2][j])
-                             + str(self.a[i - 2][j + 2])
-                             + str(self.a[i][j - 2])
-                             + str(self.a[i][j + 2])
-                             + str(self.a[i + 2][j - 2])
-                             + str(self.a[i + 2][j])
-                             + str(self.a[i + 2][j + 2]))
-                neib_sum3 = (str(self.a[i - 3][j - 3]) + str(self.a[i - 3][j])
-                             + str(self.a[i - 3][j + 3])
-                             + str(self.a[i][j - 3])
-                             + str(self.a[i][j + 3])
-                             + str(self.a[i + 3][j - 3])
-                             + str(self.a[i + 3][j])
-                             + str(self.a[i + 3][j + 3]))
+                neib_sum1 = (str(self.a[i - 1][j - 1]) +
+                             str(self.a[i - 1][j]) +
+                             str(self.a[i - 1][j + 1]) +
+                             str(self.a[i][j - 1]) +
+                             str(self.a[i][j + 1]) +
+                             str(self.a[i + 1][j - 1]) +
+                             str(self.a[i + 1][j]) +
+                             str(self.a[i + 1][j + 1]))
+                neib_sum2 = (str(self.a[i - 2][j - 2]) +
+                             str(self.a[i - 2][j]) +
+                             str(self.a[i - 2][j + 2]) +
+                             str(self.a[i][j - 2]) +
+                             str(self.a[i][j + 2]) +
+                             str(self.a[i + 2][j - 2]) +
+                             str(self.a[i + 2][j]) +
+                             str(self.a[i + 2][j + 2]))
+                neib_sum3 = (str(self.a[i - 3][j - 3]) +
+                             str(self.a[i - 3][j]) +
+                             str(self.a[i - 3][j + 3]) +
+                             str(self.a[i][j - 3]) +
+                             str(self.a[i][j + 3]) +
+                             str(self.a[i + 3][j - 3]) +
+                             str(self.a[i + 3][j]) +
+                             str(self.a[i + 3][j + 3]))
                 neib_sum = neib_sum1 + neib_sum2 + neib_sum3
-                neib_strsum = (self.a[i - 1][j - 1] + self.a[i - 1][j]
-                               + self.a[i - 1][j + 1] + self.a[i][j - 1]
-                               + self.a[i][j + 1] + self.a[i + 1][j - 1]
-                               + self.a[i + 1][j] + self.a[i + 1][j + 1])
+                neib_strsum = (self.a[i - 1][j - 1] + self.a[i - 1][j] +
+                               self.a[i - 1][j + 1] + self.a[i][j - 1] +
+                               self.a[i][j + 1] + self.a[i + 1][j - 1] +
+                               self.a[i + 1][j] + self.a[i + 1][j + 1])
 
                 if neib_strsum == 8:
-                    b[i][j] = choice([2, 3])
+                    __b[i][j] = choice([2, 3])
                 elif self.a[i][j] == 1:
                     if neib_sum.count('3') > 6:
-                        b[i][j] = 0
+                        __b[i][j] = 0
                     elif neib_sum.count('2') > 6:
-                        b[i][j] = 0
+                        __b[i][j] = 0
                     else:
-                        b[i][j] = 1
+                        __b[i][j] = 1
 
-                        b[i-1][j-1] = 1
-                        b[i-1][j] = 1
-                        b[i-1][j+1] = 1
-                        b[i][j-1] = 1
-                        b[i][j+1] = 1
-                        b[i+1][j-1] = 1
-                        b[i+1][j] = 1
-                        b[i+1][j+1] = 1
+                        __b[i-1][j-1] = 1
+                        __b[i-1][j] = 1
+                        __b[i-1][j+1] = 1
+                        __b[i][j-1] = 1
+                        __b[i][j+1] = 1
+                        __b[i+1][j-1] = 1
+                        __b[i+1][j] = 1
+                        __b[i+1][j+1] = 1
                 else:
-                    b[i][j] = self.a[i][j]
+                    __b[i][j] = self.a[i][j]
                 # elif self.a[i][j] ==2:
 
                 # elif self.a[i][j] ==3:
 
+        # Printing the matrix(for testing)
         # for i in range(self.n):
         #     for j in range(self.m):
         #         print(self.a[i][j], end="")
         #     print()
-        self.a = b
+        self.a = __b
 
-    # function for printing the matrix (not used)
+    # Function for printing the matrix (not used)
     # def print_field(self):
     #     for i in range(self.n):
     #         for j in range(self.m):
