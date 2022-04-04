@@ -57,7 +57,7 @@ I changed the `__draw` and `__step` methods to private ones and `__b=[]` matrix 
 
 ![Capture12](https://user-images.githubusercontent.com/96371464/161601709-86394b46-cb92-41d8-b57e-3e08411b91f2.PNG)
 
-#End of the README
+# End of the README
 
 ![mZLE3Cia2bk](https://user-images.githubusercontent.com/96371464/161602585-2238abb3-b559-4d90-9233-6734ee336b9b.png)
 
