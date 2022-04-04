@@ -41,7 +41,7 @@ class Field:
         #     self.a[x+l][y-l] = 1
         #     self.a[x+l][y] = 1
         #     self.a[x+l][y+l] = 1
-        self.draw()
+        self.__draw()
 
 # All the methods, that take input from user:
 
@@ -104,7 +104,7 @@ class Field:
 
 ###
 
-    def step(self):
+    def __step(self):
         # The whole magic happens here
         b = []
         for i in range(self.n):
@@ -114,23 +114,32 @@ class Field:
 
         for i in range(3, self.n - 3):
             for j in range(3, self.m - 3):
-                neib_sum1 = str(self.a[i - 1][j - 1]) + str(self.a[i - 1][j])
-                + str(self.a[i - 1][j + 1]) + str(self.a[i][j - 1])
-                + str(self.a[i][j + 1]) + str(self.a[i + 1][j - 1])
-                + str(self.a[i + 1][j]) + str(self.a[i + 1][j + 1])
-                neib_sum2 = str(self.a[i - 2][j - 2]) + str(self.a[i - 2][j])
-                + str(self.a[i - 2][j + 2]) + str(self.a[i][j - 2])
-                + str(self.a[i][j + 2]) + str(self.a[i + 2][j - 2])
-                + str(self.a[i + 2][j]) + str(self.a[i + 2][j + 2])
-                neib_sum3 = str(self.a[i - 3][j - 3]) + str(self.a[i - 3][j])
-                + str(self.a[i - 3][j + 3]) + str(self.a[i][j - 3])
-                + str(self.a[i][j + 3]) + str(self.a[i + 3][j - 3])
-                + str(self.a[i + 3][j]) + str(self.a[i + 3][j + 3])
+                neib_sum1 = (str(self.a[i - 1][j - 1]) + str(self.a[i - 1][j])
+                             + str(self.a[i - 1][j + 1])
+                             + str(self.a[i][j - 1])
+                             + str(self.a[i][j + 1])
+                             + str(self.a[i + 1][j - 1])
+                             + str(self.a[i + 1][j])
+                             + str(self.a[i + 1][j + 1]))
+                neib_sum2 = (str(self.a[i - 2][j - 2]) + str(self.a[i - 2][j])
+                             + str(self.a[i - 2][j + 2])
+                             + str(self.a[i][j - 2])
+                             + str(self.a[i][j + 2])
+                             + str(self.a[i + 2][j - 2])
+                             + str(self.a[i + 2][j])
+                             + str(self.a[i + 2][j + 2]))
+                neib_sum3 = (str(self.a[i - 3][j - 3]) + str(self.a[i - 3][j])
+                             + str(self.a[i - 3][j + 3])
+                             + str(self.a[i][j - 3])
+                             + str(self.a[i][j + 3])
+                             + str(self.a[i + 3][j - 3])
+                             + str(self.a[i + 3][j])
+                             + str(self.a[i + 3][j + 3]))
                 neib_sum = neib_sum1 + neib_sum2 + neib_sum3
-                neib_strsum = self.a[i - 1][j - 1] + self.a[i - 1][j]
-                + self.a[i - 1][j + 1] + self.a[i][j - 1]
-                + self.a[i][j + 1] + self.a[i + 1][j - 1]
-                + self.a[i + 1][j] + self.a[i + 1][j + 1]
+                neib_strsum = (self.a[i - 1][j - 1] + self.a[i - 1][j]
+                               + self.a[i - 1][j + 1] + self.a[i][j - 1]
+                               + self.a[i][j + 1] + self.a[i + 1][j - 1]
+                               + self.a[i + 1][j] + self.a[i + 1][j + 1])
 
                 if neib_strsum == 8:
                     b[i][j] = choice([2, 3])
@@ -169,7 +178,7 @@ class Field:
     #             print(self.a[i][j], end="")
     #         print()
 
-    def draw(self):
+    def __draw(self):
         '''
        draw each element of matrix as a rectangle
        '''
@@ -196,10 +205,10 @@ class Field:
 
         try:
             if self.running is True:
-                self.step()
+                self.__step()
         except AttributeError:
             pass
-        self.c.after(1000, self.draw)
+        self.c.after(500, self.__draw)
 
     def start(self, event):
         """Start the game."""
