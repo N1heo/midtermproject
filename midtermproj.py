@@ -246,3 +246,4 @@ root.bind('p', f.stop)  # p
 
 
 root.mainloop()
+
