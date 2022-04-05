@@ -56,6 +56,7 @@ I use this one for letting the simulation start, without declaring running = Tru
 I changed the `__draw` and `__step` methods to private ones and `__b=[]` matrix variable because I need them only inside of the class.
 
 ## Code linting
+Speaking of it, if you will copy the code directly from the github overview and paste it in the site, there gonna be 1 error, about the empty line in the end of the code. But that because overview simply don't show that line.
 
 ![Capture12](https://user-images.githubusercontent.com/96371464/161601709-86394b46-cb92-41d8-b57e-3e08411b91f2.PNG)
 
