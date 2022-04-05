@@ -1,8 +1,8 @@
 # This is my midterm project
 
-## Credits:
-The code foundation I took from my teacher's implementation of Conway's game of life.
-The idea I overheard from my friend, that was doing something simillar years ago. All what I heard from his was: "I was making some kind of a human organism cellural simulation." After some time of working on this project, I found out that my teacher also mentioned this idea, but in the other group.
+## Credits
+The code foundation I took from my teacher's implementation of **Conway's game of life.**
+The idea I overheard from my friend, that was doing something simillar years ago. All what I heard from him was: "I was making some kind of a human organism cellural simulation." After some time of working on this project, I found out that my teacher also mentioned this idea, but in the other group.
 
 ## The idea itself
 So I've developed the idea into this:
@@ -19,18 +19,20 @@ So I've developed the idea into this:
 
 ![Capture1](https://user-images.githubusercontent.com/96371464/161593121-399a5003-2477-4990-867b-6c84641ebd0e.PNG)
 
+![Capture222](https://user-images.githubusercontent.com/96371464/161748590-3ea59143-bdee-4cbe-98b8-d9d7006a8f5d.PNG)
+
 ## Working procces
 ### Presets
 Well, I started by adding preset function. I did that using tkinter **bind** method.
 The user can add or delete all the 3 kind of cells using his mouse.
 After that, I made it possible to start or stop the game, so user could make presets without sells dying immediately.
 
-Letting the user know, what to press is important:
+**Letting the user know, what to press is important:**
 
 ![Capture21](https://user-images.githubusercontent.com/96371464/161592851-9779baa6-3e75-426b-910e-78997074f3a3.PNG)
 
 ### Fixes
-Making some tests, i find out that the game doesn't behave like conway's, there was a mistake in the sum line. After fixing it and having completely working game of life I started to work on my own rules of the game.
+Making some tests, i find out that the game doesn't behave like conway's, there was a mistake in the sum line. After fixing it and having completely working _game of life_ I started to work on **my own rules** of the game.
 
 ## The code rules
 This was the hardest part of the project. I had something like 10 versions of main algoritm and there was this problem. If I made them kind of a logical, then the visualization gets worster and to make it look better, I used a little bit more unlogical algrotims. So, here they are:
